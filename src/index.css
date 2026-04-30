@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  /* Default Theme (Dark) */
+  --color-primary: #0A0A0A;
+  --color-secondary: #111111;
+  --color-accent: #8B5CF6;
+  --color-text: #FAFAFA;
+  --color-muted: #A3A3A3;
+  --color-border: #262626;
+
+  --font-display: "Sora", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Font Sizes */
+  --text-heroXl: 88px;
+  --text-heroLg: 48px;
+  --text-h1: 40px;
+  --text-h2: 32px;
+  --text-h3: 24px;
+  --text-bodyLg: 18px;
+  --text-bodymd: 16px;
+  --text-bodySm: 14px;
+  --text-bodyXs: 12px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    transition: background-color 0.3s, color 0.3s;
+  }
+}
+
+/* Light Mode Override */
+@variant light (&:where(.light, .light *));
+
+.light {
+  --color-primary: #FFFFFF;
+  --color-secondary: #F5F5F5;
+  --color-accent: #8B5CF6;
+  --color-text: #0A0A0A;
+  --color-muted: #737373;
+  --color-border: #E5E5E5;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --text-heroXl: 64px;
+    --text-heroLg: 40px;
+    --text-h1: 32px;
+    --text-h2: 28px;
+    --text-h3: 22px;
+    --text-bodyLg: 17px;
+    --text-bodyMd: 15px;
+    --text-bodySm: 13px;
+    --text-bodyXs: 12px;
+  }
+}
+
+/* Mobile (≤ 640px) */
+@media (max-width: 640px) {
+  :root {
+    --text-heroXl: 42px;
+    --text-heroLg: 28px;
+    --text-h1: 26px;
+    --text-h2: 22px;
+    --text-h3: 18px;
+    --text-bodyLg: 16px;
+    --text-bodyMd: 14px;
+    --text-bodySm: 13px;
+    --text-bodyXs: 11px;
+  }
+}
