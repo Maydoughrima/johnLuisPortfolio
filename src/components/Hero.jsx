@@ -3,10 +3,11 @@ import SectionWrapper from "./SectionWrapper";
 import Blob from "../assets/blob.svg";
 import Blob2 from "../assets/blob2.svg";
 import Button from "./Buttons/Button";
+import { FiArrowDown } from "react-icons/fi";
 
 export default function Hero() {
   return (
-    <SectionWrapper className="relative min-h-screen flex items-center overflow-hidden">
+    <SectionWrapper className="relative min-h-screen flex items-center">
       {/* Top Right Blob (bigger + right-10) */}
       <img
         src={Blob}
@@ -18,7 +19,7 @@ export default function Hero() {
       <img
         src={Blob2}
         alt="blob"
-        className="absolute bottom-[-32%] left-[-15%] w-[500px] md:w-[700px] lg:w-[900px] max-w-none opacity-40 rotate-360 blur-[30px] pointer-events-none select-none transition-all duration-700 ease-in-out"
+        className="absolute bottom-[-14%] left-[-80%] md:bottom-[-20%] md:left-[-40%] lg:bottom-[-32%] lg:left-[-15%] w-[500px] md:w-[700px] lg:w-[900px] max-w-none opacity-40 rotate-360 blur-[30px] pointer-events-none select-none transition-all duration-700 ease-in-out"
       />
 
       {/* Content */}
@@ -46,6 +47,14 @@ export default function Hero() {
             View Works
           </Button>
         </div>
+      </div>
+
+      {/* Scroll Down Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-float pointer-events-none select-none z-10">
+        <div className="w-12 h-12 rounded-full border-2 border-accent flex items-center justify-center text-accent">
+          <FiArrowDown size={24} />
+        </div>
+        <span className="text-muted text-bodySm font-body">Scroll Down</span>
       </div>
     </SectionWrapper>
   );

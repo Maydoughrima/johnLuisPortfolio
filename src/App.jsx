@@ -1,13 +1,13 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Landingpage from "./pages/Landingpage";
+import ProjectDetails from "./pages/ProjectDetails";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Landingpage />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Landingpage />} />
+      <Route path="/projects/:id" element={<ProjectDetails />} />
+    </Routes>
   );
 }
