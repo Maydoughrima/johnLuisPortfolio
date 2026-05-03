@@ -7,16 +7,22 @@ import ContactPreview from "../components/ContactPreview";
 export default function WorksSection() {
   return (
     <SectionWrapper className="relative min-h-screen w-full">
-      {/* container */}
-      <div className="flex flex-col md:flex-row gap-16">
-        {/* LEFT SIDE (works content) */}
+      <div className="flex flex-col md:flex-row gap-6 md:gap-16 w-full pt-10 md:pt-0">
+        {/* LEFT */}
         <div className="md:w-2/3 flex flex-col gap-12 relative z-10">
-          {/* header */}
-          <p className="font-display text-h2 font-semibold text-font">
-            Recent Projects
-          </p>
+          {/* HEADER */}
+          <div className="flex flex-col gap-3">
+            <h2 className="font-display text-h1 font-semibold text-text">
+              Recent Projects
+            </h2>
 
-          {/* cards */}
+            <p className="text-bodyLg text-muted max-w-md leading-relaxed">
+              Selected work focused on building structured, scalable, and
+              user-centered digital experiences.
+            </p>
+          </div>
+
+          {/* CARDS */}
           <div className="flex flex-col gap-12">
             {projects.map((project) => (
               <WorksCard
@@ -31,11 +37,9 @@ export default function WorksSection() {
           </div>
         </div>
 
-        {/* RIGHT SIDE (contact preview) */}
-        <div className="md:w-1/3 md:sticky md:top-24 h-fit relative z-0">
-          <div className="pointer-events-auto">
-            <ContactPreview />
-          </div>
+        {/* RIGHT */}
+        <div className="md:w-1/3 md:sticky md:top-32 h-fit">
+          <ContactPreview />
         </div>
       </div>
     </SectionWrapper>

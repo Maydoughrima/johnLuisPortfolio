@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import SectionWrapper from "../components/SectionWrapper";
 import projects from "../config/projects";
-import { motion } from "framer-motion";
 import Button from "../components/Buttons/Button";
 
 export default function ProjectDetails() {
@@ -28,14 +27,28 @@ export default function ProjectDetails() {
 
   const [active, setActive] = useState("overview");
   const [progress, setProgress] = useState(0);
+  const [visibleSections, setVisibleSections] = useState({});
 
   const clickLock = useRef(false);
   const lockTimeout = useRef(null);
 
-  const isMobile =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 767px)").matches;
+  const [isMobile, setIsMobile] = useState(false);
 
+  // MOBILE DETECTION
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // FORCE TOP ON LOAD
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+    setActive("overview");
+  }, [id]);
+
+  // NAV CLICK
   const scrollTo = (id) => {
     clickLock.current = true;
     setActive(id);
@@ -51,11 +64,21 @@ export default function ProjectDetails() {
     }, 700);
   };
 
+  // SCROLL SYNC
   useEffect(() => {
     const handleScroll = () => {
       if (clickLock.current) return;
 
-      const scrollPos = window.scrollY + window.innerHeight * 0.4;
+      const scrollY = window.scrollY;
+      const viewportHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      if (scrollY + viewportHeight >= docHeight - 50) {
+        setActive("links");
+        return;
+      }
+
+      const scrollPos = scrollY + viewportHeight * 0.35;
 
       let current = "overview";
 
@@ -63,7 +86,9 @@ export default function ProjectDetails() {
         const el = refs[sec.id].current;
         if (!el) continue;
 
-        if (scrollPos >= el.offsetTop) {
+        const top = el.getBoundingClientRect().top + scrollY;
+
+        if (scrollPos >= top) {
           current = sec.id;
         }
       }
@@ -77,8 +102,12 @@ export default function ProjectDetails() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // MOBILE PROGRESS BAR
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isMobile) {
+      setProgress(0);
+      return;
+    }
 
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -94,6 +123,31 @@ export default function ProjectDetails() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
 
+  // ✅ INTERSECTION OBSERVER (SMOOTH REVEAL)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => ({
+              ...prev,
+              [entry.target.id]: true,
+            }));
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+      },
+    );
+
+    Object.values(refs).forEach((ref) => {
+      if (ref.current) observer.observe(ref.current);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   if (!project) {
     return (
       <>
@@ -105,32 +159,28 @@ export default function ProjectDetails() {
     );
   }
 
-  // 🔥 SMOOTH BUT NO FLICKER ANIMATION (FIXED)
-  const desktopMotion = {
-    initial: { opacity: 0, y: 12 },
-    animate: { opacity: 1, y: 0 },
-    transition: {
-      duration: 0.45,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  };
+  // ✅ SECTION COMPONENT (CSS-BASED ANIMATION)
+  const Section = ({ id, title, children }) => {
+    const isVisible = visibleSections[id];
 
-  const Section = ({ id, title, children }) => (
-    <motion.section
-      ref={refs[id]}
-      className="pb-6 md:pb-12 border-b border-border/40 scroll-mt-24 md:scroll-mt-32"
-      {...(!isMobile ? desktopMotion : {})}
-    >
-      <h2 className="text-h3 font-semibold text-text mb-3">{title}</h2>
-      {children}
-    </motion.section>
-  );
+    return (
+      <section
+        id={id}
+        ref={refs[id]}
+        className={`pb-6 md:pb-12 border-b border-border/40 scroll-mt-24 md:scroll-mt-32 transition-all duration-700 ease-out
+        ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+      >
+        <h2 className="text-h3 font-semibold text-text mb-3">{title}</h2>
+        {children}
+      </section>
+    );
+  };
 
   return (
     <main className="w-full min-h-screen">
       <Navbar />
 
-      {/* MOBILE PROGRESS BAR ONLY */}
+      {/* MOBILE PROGRESS BAR */}
       {isMobile && (
         <div className="fixed top-0 left-0 w-full h-[3px] bg-border/30 z-[999]">
           <div
@@ -144,15 +194,15 @@ export default function ProjectDetails() {
         <div className="flex flex-col md:flex-row gap-6 md:gap-16 pt-5 md:pt-0">
           {/* NAV */}
           <aside className="hidden md:flex md:w-1/4 flex-col gap-4 text-sm text-muted sticky top-32 h-fit">
-            <p className="text-text font-semibold mb-6">Project</p>
+            <p className="text-text text-h2 font-semibold mb-6">Project</p>
 
             {sections.map((s) => (
               <button
                 key={s.id}
                 onClick={() => scrollTo(s.id)}
-                className={`text-left border-l-2 pl-3 transition-all duration-300 ${
+                className={`text-left text-bodyMd font-medium border-l-2 pl-3 transition-all duration-300 ${
                   active === s.id
-                    ? "text-text border-text"
+                    ? "text-accent border-accent"
                     : "text-muted border-transparent hover:text-text"
                 }`}
               >
@@ -162,29 +212,40 @@ export default function ProjectDetails() {
           </aside>
 
           {/* CONTENT */}
-          <div className="md:w-3/4 flex flex-col gap-6 md:gap-20">
+          <div className="md:w-3/4 flex flex-col gap-6 md:gap-10">
             <Section id="overview" title={project.title}>
-              <p className="text-muted text-bodyLg max-w-3xl">
+              <p className="text-muted text-bodyMd max-w-3xl">
                 {project.longDescription}
               </p>
             </Section>
 
             <Section id="problem" title="Problem">
-              <p className="text-muted max-w-3xl">{project.problem}</p>
+              <p className="text-muted text-bodyMd max-w-3xl">
+                {project.problem}
+              </p>
             </Section>
 
             <Section id="caseStudy" title="Case Study">
-              <p className="text-muted max-w-3xl">{project.caseStudy}</p>
+              <p className="text-muted text-bodyMd max-w-3xl">
+                {project.caseStudy}
+              </p>
             </Section>
 
             <Section id="result" title="Result">
-              <p className="text-muted max-w-3xl">{project.result}</p>
+              <p className="text-muted text-bodyMd max-w-3xl">
+                {project.result}
+              </p>
             </Section>
 
-            <motion.section
+            <section
+              id="links"
               ref={refs.links}
-              className="pb-10 border-b border-border/40 scroll-mt-24 md:scroll-mt-32"
-              {...(!isMobile ? desktopMotion : {})}
+              className={`pb-10 border-b border-border/40 scroll-mt-24 md:scroll-mt-32 transition-all duration-700 ease-out
+              ${
+                visibleSections.links
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-6"
+              }`}
             >
               <h2 className="text-h3 font-semibold text-text mb-4">Links</h2>
 
@@ -209,7 +270,7 @@ export default function ProjectDetails() {
                   GitHub
                 </Button>
               </div>
-            </motion.section>
+            </section>
           </div>
         </div>
       </SectionWrapper>

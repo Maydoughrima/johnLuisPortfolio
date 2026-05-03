@@ -5,10 +5,11 @@ export default function Button({
   variant = "primary",
   size = "sm",
   className = "",
+  as = "button",
   ...props
 }) {
   const baseStyles =
-    "text-bodySm font-medium rounded-md flex items-center justify-center cursor-pointer";
+    "text-bodySm font-medium font-body rounded-md flex items-center justify-center cursor-pointer transition-all duration-300";
 
   const sizes = {
     sm: "px-[12px] py-[8px]",
@@ -21,16 +22,17 @@ export default function Button({
   const variants = {
     primary: "bg-accent text-white",
     secondary: "bg-white text-[#0A0A0A]",
-    ghost:
-      "bg-transparent text-accent border border-text hover:bg-text transition-all duration-300",
+    ghost: "bg-transparent text-accent border border-text hover:bg-text",
   };
 
+  const Component = as;
+
   return (
-    <button
+    <Component
       className={`${baseStyles} ${sizes[size]} ${variants[variant]} ${className}`}
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
 }
