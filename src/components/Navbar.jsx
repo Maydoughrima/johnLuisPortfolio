@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Moon, Sun, X } from "lucide-react";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 
+import { IoCloseOutline } from "react-icons/io5";
+
 export default function Navbar() {
   const location = useLocation();
   const [isLightMode, setIsLightMode] = useState(false);
@@ -144,6 +146,14 @@ export default function Navbar() {
             : "opacity-0 invisible pointer-events-none"
         }`}
       >
+        {/* Close Button inside Menu */}
+        <button
+          onClick={() => setIsMobileMenuOpen(false)}
+          className="absolute top-6 right-6 text-text hover:text-accent transition-colors"
+          aria-label="Close menu"
+        >
+          <IoCloseOutline size={32} />
+        </button>
         <ul className="flex flex-col items-center gap-10 text-h2 font-display font-semibold text-text">
           {navItems.map((item, index) => (
             <a
