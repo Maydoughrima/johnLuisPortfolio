@@ -29,7 +29,9 @@ export default function ContactPreview() {
       {/* button */}
       <div className="w-full flex justify-center pt-2">
         <Button
+          as="a"
           variant="primary"
+          href="#contact"
           size="responsive"
           className="w-full md:w-auto"
         >

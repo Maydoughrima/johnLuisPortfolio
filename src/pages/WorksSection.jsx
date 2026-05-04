@@ -4,9 +4,9 @@ import projects from "../config/projects";
 import WorksCard from "../components/WorksCard";
 import ContactPreview from "../components/ContactPreview";
 
-export default function WorksSection() {
+export default function WorksSection({ id }) {
   return (
-    <SectionWrapper className="relative min-h-screen w-full">
+    <SectionWrapper id={id} className="relative min-h-screen w-full">
       <div className="flex flex-col md:flex-row gap-6 md:gap-16 w-full pt-10 md:pt-0">
         {/* LEFT */}
         <div className="md:w-2/3 flex flex-col gap-12 relative z-10">

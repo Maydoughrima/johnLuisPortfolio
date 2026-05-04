@@ -4,7 +4,7 @@ import SectionWrapper from "../components/SectionWrapper";
 export default function Footer() {
   return (
     <SectionWrapper className="relative w-full">
-      <div className="flex flex-col gap-12 pt-10 pb-14 border-t border-border/40">
+      <div className="flex flex-col gap-12 pt-10 border-t border-border">
         {/* TOP */}
         <div className="flex flex-col md:flex-row justify-between gap-10">
           <div className="flex flex-col gap-4 max-w-md">

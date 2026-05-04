@@ -2,9 +2,9 @@ import React from "react";
 import SectionWrapper from "../components/SectionWrapper";
 import Button from "../components/Buttons/Button";
 
-export default function Contact() {
+export default function Contact({ id }) {
   return (
-    <SectionWrapper className="relative w-full">
+    <SectionWrapper id={id} className="relative w-full">
       <div className="flex flex-col md:flex-row gap-6 md:gap-16 w-full pt-10 md:pt-0">
         {/* ================= LEFT SIDE ================= */}
         <div className="md:w-1/2 flex flex-col gap-12">

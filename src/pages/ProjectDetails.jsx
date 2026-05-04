@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import SectionWrapper from "../components/SectionWrapper";
 import projects from "../config/projects";
@@ -27,7 +28,6 @@ export default function ProjectDetails() {
 
   const [active, setActive] = useState("overview");
   const [progress, setProgress] = useState(0);
-  const [visibleSections, setVisibleSections] = useState({});
 
   const clickLock = useRef(false);
   const lockTimeout = useRef(null);
@@ -123,31 +123,6 @@ export default function ProjectDetails() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
 
-  // ✅ INTERSECTION OBSERVER (SMOOTH REVEAL)
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisibleSections((prev) => ({
-              ...prev,
-              [entry.target.id]: true,
-            }));
-          }
-        });
-      },
-      {
-        threshold: 0.15,
-      },
-    );
-
-    Object.values(refs).forEach((ref) => {
-      if (ref.current) observer.observe(ref.current);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   if (!project) {
     return (
       <>
@@ -159,22 +134,24 @@ export default function ProjectDetails() {
     );
   }
 
-  // ✅ SECTION COMPONENT (CSS-BASED ANIMATION)
+  // ✅ SECTION COMPONENT (USING FRAMER MOTION)
   const Section = ({ id, title, children }) => {
-    const isVisible = visibleSections[id];
-
     return (
-      <section
+      <motion.section
         id={id}
         ref={refs[id]}
-        className={`pb-6 md:pb-12 border-b border-border/40 scroll-mt-24 md:scroll-mt-32 transition-all duration-700 ease-out
-        ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="pb-6 md:pb-12 border-b border-border/40 scroll-mt-24 md:scroll-mt-32"
       >
         <h2 className="text-h3 font-semibold text-text mb-3">{title}</h2>
         {children}
-      </section>
+      </motion.section>
     );
   };
+
 
   return (
     <main className="w-full min-h-screen">
@@ -237,17 +214,17 @@ export default function ProjectDetails() {
               </p>
             </Section>
 
-            <section
+            <motion.section
               id="links"
               ref={refs.links}
-              className={`pb-10 border-b border-border/40 scroll-mt-24 md:scroll-mt-32 transition-all duration-700 ease-out
-              ${
-                visibleSections.links
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-6"
-              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="pb-10 border-b border-border/40 scroll-mt-24 md:scroll-mt-32"
             >
               <h2 className="text-h3 font-semibold text-text mb-4">Links</h2>
+
 
               <div className="flex gap-4 flex-wrap">
                 <Button
@@ -270,7 +247,8 @@ export default function ProjectDetails() {
                   GitHub
                 </Button>
               </div>
-            </section>
+            </motion.section>
+
           </div>
         </div>
       </SectionWrapper>

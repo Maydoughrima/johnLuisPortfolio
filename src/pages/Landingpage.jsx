@@ -8,17 +8,26 @@ import AboutMeSection from "./AboutMeSection";
 import Contact from "./Contact";
 import Footer from "./Footer";
 
+
 export default function Landingpage() {
   return (
-    <main className="overflow-x-hidden w-full relative">
+    <main className="overflow-x-hidden">
+
+
+
+
+
+
+
       <Navbar />
-      <Hero />
-      <WorksSection />
-      <SkillsSection />
-      <ProcessSection />
-      <AboutMeSection />
-      <Contact />
+      <Hero id="home" />
+      <WorksSection id="works" />
+      <SkillsSection id="skills" />
+      <ProcessSection id="process" />
+      <AboutMeSection id="about" />
+      <Contact id="contact" />
       <Footer />
     </main>
+
   );
 }

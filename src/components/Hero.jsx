@@ -5,9 +5,9 @@ import Blob2 from "../assets/blob2.svg";
 import Button from "./Buttons/Button";
 import { FiArrowDown } from "react-icons/fi";
 
-export default function Hero() {
+export default function Hero({ id }) {
   return (
-    <SectionWrapper className="relative min-h-screen flex items-center">
+    <SectionWrapper id={id} className="relative min-h-screen flex items-center">
       {/* Top Right Blob */}
       <img
         src={Blob}
@@ -68,7 +68,7 @@ export default function Hero() {
         </div>
 
         <div className="flex items-center gap-4 mt-2">
-          <Button variant="primary" size="responsive">
+          <Button as="a" href="#contact" variant="primary" size="responsive">
             Hire Me Now
           </Button>
 
@@ -84,12 +84,15 @@ export default function Hero() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-float pointer-events-none select-none z-10">
-        <div className="w-12 h-12 rounded-full border-2 border-accent flex items-center justify-center text-accent">
+      <a
+        href="#works"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 animate-float z-20 cursor-pointer group hover:opacity-80 transition-opacity"
+      >
+        <div className="w-12 h-12 rounded-full border-2 border-accent flex items-center justify-center text-accent group-hover:bg-accent/10 transition-colors">
           <FiArrowDown size={24} />
         </div>
         <span className="text-muted text-bodySm font-body">Scroll Down</span>
-      </div>
+      </a>
     </SectionWrapper>
   );
 }
