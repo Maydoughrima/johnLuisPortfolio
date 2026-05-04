@@ -77,7 +77,7 @@ const projects = [
       "The new system delivered a server-based solution with an improved user interface tailored for direct and efficient payroll management. It reduced redundancy in workflows, improved processing speed, and provided a more intuitive experience, allowing staff to manage payroll operations more accurately and with less effort.",
 
     liveUrl: "https://tdh-payroll-demo.com",
-    githubUrl: "https://github.com/yourname/tdh-payroll",
+    githubUrl: "https://github.com/Maydoughrima/TDHI-WEB-",
   },
 ];
 

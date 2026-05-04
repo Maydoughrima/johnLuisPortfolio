@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Buttons/Button";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function WorksCard({
   id,
@@ -11,7 +12,7 @@ export default function WorksCard({
 }) {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col gap-6 pb-10 border-b border-border">
+    <div className="flex flex-col gap-6 pb-10 border-b border-border group">
       {/* header */}
       <div className="flex items-center gap-2 text-sm text-muted">
         {/* date */}
@@ -36,7 +37,7 @@ export default function WorksCard({
       </div>
 
       {/* title */}
-      <h3 className="text-h3 font-semibold font-display text-text leading-tight">
+      <h3 className="text-h3 font-semibold font-display text-text leading-tight group-hover:text-accent transition-colors duration-300">
         {title}
       </h3>
 

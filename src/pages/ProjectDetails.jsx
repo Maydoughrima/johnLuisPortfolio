@@ -137,18 +137,14 @@ export default function ProjectDetails() {
   // ✅ SECTION COMPONENT (USING FRAMER MOTION)
   const Section = ({ id, title, children }) => {
     return (
-      <motion.section
+      <section
         id={id}
         ref={refs[id]}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
         className="pb-6 md:pb-12 border-b border-border/40 scroll-mt-24 md:scroll-mt-32"
       >
         <h2 className="text-h3 font-semibold text-text mb-3">{title}</h2>
         {children}
-      </motion.section>
+      </section>
     );
   };
 
@@ -167,7 +163,7 @@ export default function ProjectDetails() {
         </div>
       )}
 
-      <SectionWrapper>
+      <SectionWrapper noReveal>
         <div className="flex flex-col md:flex-row gap-6 md:gap-16 pt-5 md:pt-0">
           {/* NAV */}
           <aside className="hidden md:flex md:w-1/4 flex-col gap-4 text-sm text-muted sticky top-32 h-fit">
@@ -214,28 +210,26 @@ export default function ProjectDetails() {
               </p>
             </Section>
 
-            <motion.section
+            <section
               id="links"
               ref={refs.links}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.7, ease: "easeOut" }}
               className="pb-10 border-b border-border/40 scroll-mt-24 md:scroll-mt-32"
             >
               <h2 className="text-h3 font-semibold text-text mb-4">Links</h2>
 
 
               <div className="flex gap-4 flex-wrap">
-                <Button
-                  as="a"
-                  href={project.liveUrl}
-                  target="_blank"
-                  variant="primary"
-                  size="responsive"
-                >
-                  Visit Site
-                </Button>
+                {project.id !== "tdh-payroll" && (
+                  <Button
+                    as="a"
+                    href={project.liveUrl}
+                    target="_blank"
+                    variant="primary"
+                    size="responsive"
+                  >
+                    Visit Site
+                  </Button>
+                )}
 
                 <Button
                   as="a"
@@ -247,7 +241,7 @@ export default function ProjectDetails() {
                   GitHub
                 </Button>
               </div>
-            </motion.section>
+            </section>
 
           </div>
         </div>

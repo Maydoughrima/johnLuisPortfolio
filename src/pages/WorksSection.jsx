@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import SectionWrapper from "../components/SectionWrapper";
 import projects from "../config/projects";
 import WorksCard from "../components/WorksCard";
@@ -6,7 +7,7 @@ import ContactPreview from "../components/ContactPreview";
 
 export default function WorksSection({ id }) {
   return (
-    <SectionWrapper id={id} className="relative min-h-screen w-full">
+    <SectionWrapper id={id} className="relative min-h-screen w-full" noReveal>
       <div className="flex flex-col md:flex-row gap-6 md:gap-16 w-full pt-10 md:pt-0">
         {/* LEFT */}
         <div className="md:w-2/3 flex flex-col gap-12 relative z-10">
@@ -25,14 +26,15 @@ export default function WorksSection({ id }) {
           {/* CARDS */}
           <div className="flex flex-col gap-12">
             {projects.map((project) => (
-              <WorksCard
-                key={project.id}
-                id={project.id}
-                date={project.date}
-                techStack={project.techStack}
-                title={project.title}
-                description={project.description}
-              />
+              <div key={project.id}>
+                <WorksCard
+                  id={project.id}
+                  date={project.date}
+                  techStack={project.techStack}
+                  title={project.title}
+                  description={project.description}
+                />
+              </div>
             ))}
           </div>
         </div>
