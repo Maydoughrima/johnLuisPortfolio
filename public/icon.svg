@@ -1,0 +1,22 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background (auto adapts if you remove this) -->
+  <rect width="64" height="64" rx="16" fill="currentColor"/>
+
+  <!-- JM Text -->
+  <text
+    x="50%"
+    y="52%"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="Inter, Arial, sans-serif"
+    font-size="28"
+    font-weight="700"
+    fill="#FFFFFF"
+    letter-spacing="1"
+  >
+    JM
+  </text>
+
+  <!-- Accent underline -->
+  <rect x="16" y="44" width="32" height="3" rx="2" fill="#8B5CF6"/>
+</svg>
