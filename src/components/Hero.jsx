@@ -72,10 +72,7 @@ export default function Hero({ id }) {
             Hire Me Now
           </Button>
 
-          <a
-            href="/MERCADO-JOHN LUIS NATHANIEL-RESUME.pdf"
-            download="Luis-Mercado-CV.pdf"
-          >
+          <a href="/JOHNLUISMERCADORESUME.pdf" download="Luis-Mercado-CV.pdf">
             <Button variant="ghost" size="responsive">
               Download CV
             </Button>

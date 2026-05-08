@@ -35,7 +35,7 @@ export default function Contact({ id }) {
 
             <Button
               as="a"
-              href="/MERCADO-JOHN LUIS NATHANIEL-RESUME.pdf"
+              href="/JOHNLUISMERCADORESUME.pdf"
               download
               variant="ghost"
               size="responsive"
